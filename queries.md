@@ -43,3 +43,11 @@ DELETE FROM Customers
 WHERE not exists (select 1
                   from Orders 
                   where Orders.CustomerID = Customers.CustomerID);
+
+                  or 
+
+                  delete from customers where CustomerName in (
+SELECT Customers.CustomerName
+from Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE OrderID is null)
