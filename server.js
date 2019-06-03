@@ -7,6 +7,7 @@ server.use(express.json());
 const accountsRouter = require('./api/accountsRouter');
 server.use("/api/accounts", accountsRouter);
 
+//default router 
 server.get("/", (req, res) => {
     res.send(`<h3> hi from accounts api !</h3>`);
     });
