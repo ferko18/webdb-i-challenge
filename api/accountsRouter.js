@@ -39,7 +39,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
     const { name, budget } = req.body;
     const newEntry = req.body;
     if (!name || !budget) {
@@ -58,4 +58,36 @@ router.post("/", async (req, res) => {
     }
     });
 
+
+//put end point 
+router.put('/:id', async (req, res)=>{
+    const { name, budget } = req.body;
+          if (!name || !budget) {
+              return res.status(400).json({
+                errorMessage: "Please provide name and budget "
+              });}
+      try{
+        const { id } = req.params;
+        const incomingChanges = req.body;
+        const updatedEntry = await db.update(id, incomingChanges);
+        if (!updatedEntry){
+          res.status(404).json({
+                    success: false,
+                    message: " the specified Id does not exist."
+                  });
+        }else{
+          res.status(201).json({
+                  success: true,
+                  updatedEntry
+                });
+        }
+    
+      }
+      catch(err){
+        res.status(500).json({
+                error: err,
+                errorMessage: "could not be updated."
+              });
+      }
+    })
 module.exports = router;
